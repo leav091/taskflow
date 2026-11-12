@@ -1,0 +1,27 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: test_root
+          MYSQL_DATABASE: taskflow_test
+          MYSQL_USER: taskflow
+          MYSQL_PASSWORD: test_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --dev
+      - run: uv run pytest --cov=backend --cov-report=term-missing
+        env:
+          TEST_DATABASE_URL: mysql+pymysql://taskflow:test_password@127.0.0.1:3306/taskflow_test?charset=utf8mb4

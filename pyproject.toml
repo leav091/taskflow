@@ -1,0 +1,31 @@
+[project]
+name = "fastapi-crud-fastmcp"
+version = "0.1.0"
+description = "LangChain agents with FastAPI MCP tools and MySQL persistence"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.115.12",
+    "fastapi-mcp>=0.3.4",
+    "pydantic>=2.11.5",
+    "langchain>=1.0,<2",
+    "langchain-openai>=1.0,<2",
+    "langchain-mcp-adapters>=0.1,<1",
+    "pymysql[rsa]>=1.1,<2",
+    "pydantic-settings>=2.9.1",
+    "python-dotenv>=1.1.0",
+    "sqlalchemy>=2.0.41",
+    "uvicorn[standard]>=0.34.2",
+    "rich>=14.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "ruff>=0.11.11",
+]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::PendingDeprecationWarning"]
